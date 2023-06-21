@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserRegistrationView, LoginView, UserHackathonCreateView, UserHackathonUpdateView, UserHackathonDeleteView
+from .views import UserRegistrationView, LoginView, UserHackathonCreateView, UserHackathonUpdateView, UserHackathonDeleteView, HackathonListView
 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
          name='hackathon-update-delete'),
     path('id/<int:user_id>/delete/hackathon-id/<int:hackathon_id>/', UserHackathonDeleteView.as_view(),
          name='hackathon-update-delete'),
+    path('list-hackathon/', HackathonListView.as_view(), name='hackathon-list'),
 
 
 ]

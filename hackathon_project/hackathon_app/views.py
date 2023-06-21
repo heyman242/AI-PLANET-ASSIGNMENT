@@ -1,9 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
+
 
 from .models import RegisteredUser, Hackathon
-from .serializers import RegisteredUserSerializer, LoginSerializer, HackathonSerializer
+from .serializers import RegisteredUserSerializer, LoginSerializer, HackathonSerializer, HackathonListSerializer
 
 
 class UserRegistrationView(APIView):
@@ -61,3 +63,8 @@ class UserHackathonDeleteView(APIView):
 
         hackathon.delete()
         return Response({'message': 'Hackathon deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class HackathonListView(generics.ListAPIView):
+    queryset = Hackathon.objects.all()
+    serializer_class = HackathonListSerializer

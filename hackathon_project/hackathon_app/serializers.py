@@ -49,3 +49,9 @@ class HackathonSerializer(serializers.ModelSerializer):
         created_by = validated_data.pop('created_by', None)
         hackathon = Hackathon.objects.create(created_by=created_by, **validated_data)
         return hackathon
+
+
+class HackathonListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hackathon
+        fields = ['title', 'start_datetime', 'end_datetime', 'reward_prize']
