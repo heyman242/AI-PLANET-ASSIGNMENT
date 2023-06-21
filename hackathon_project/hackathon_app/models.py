@@ -12,6 +12,7 @@ class RegisteredUser(models.Model):
     def __str__(self):
         return self.name
 
+
 class Hackathon(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -30,3 +31,8 @@ class Hackathon(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EnrolledHackathon(models.Model):
+    hackathon = models.ForeignKey('Hackathon', on_delete=models.CASCADE)
+    user = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE)
