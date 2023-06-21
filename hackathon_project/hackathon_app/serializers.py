@@ -37,9 +37,11 @@ class LoginSerializer(serializers.Serializer):
 
 
 class HackathonSerializer(serializers.ModelSerializer):
+    hackathon_id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Hackathon
-        fields = ['title', 'description', 'background_image', 'hackathon_image', 'submission_type',
+        fields = ['hackathon_id', 'title', 'description', 'background_image', 'hackathon_image', 'submission_type',
                   'start_datetime', 'end_datetime', 'reward_prize']
         read_only_fields = ['created_by']
 
