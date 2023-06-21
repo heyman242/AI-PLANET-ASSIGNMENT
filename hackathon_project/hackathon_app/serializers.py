@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import RegisteredUser, Hackathon
+from .models import RegisteredUser, Hackathon, Submission
 
 
 class RegisteredUserSerializer(serializers.ModelSerializer):
@@ -36,13 +36,20 @@ class LoginSerializer(serializers.Serializer):
         return data
 
 
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Submission
+        fields = ['id', 'name', 'summary', 'submission_link', 'created_datetime']
+
+
 class HackathonSerializer(serializers.ModelSerializer):
     hackathon_id = serializers.IntegerField(read_only=True)
+    submissions = SubmissionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Hackathon
         fields = ['hackathon_id', 'title', 'description', 'background_image', 'hackathon_image', 'submission_type',
-                  'start_datetime', 'end_datetime', 'reward_prize']
+                  'start_datetime', 'end_datetime', 'reward_prize', 'submissions']
         read_only_fields = ['created_by']
 
     def create(self, validated_data):
@@ -55,3 +62,5 @@ class HackathonListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hackathon
         fields = ['title', 'start_datetime', 'end_datetime', 'reward_prize']
+
+

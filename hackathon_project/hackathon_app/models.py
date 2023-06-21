@@ -36,3 +36,15 @@ class Hackathon(models.Model):
 class EnrolledHackathon(models.Model):
     hackathon = models.ForeignKey('Hackathon', on_delete=models.CASCADE)
     user = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE)
+
+
+class Submission(models.Model):
+    hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE, related_name='submissions')
+    user = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE, related_name='submissions')
+    name = models.CharField(max_length=255)
+    summary = models.TextField()
+    submission_link = models.URLField(null=True, blank=True)
+    created_datetime = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['hackathon', 'user']
