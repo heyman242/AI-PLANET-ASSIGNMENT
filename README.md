@@ -37,11 +37,16 @@ The project is developed using Python with the Django framework and Django Rest 
 ## Getting Started
 To run the project locally, follow these steps:
 
-Clone the repository: git clone git@github.com:heyman242/AI-PLANET-ASSIGNMENT.git
-Navigate to the project directory: cd hackathon_project
-Install the required dependencies: pip install -r requirements.txt
-Set up the database and perform migrations: python manage.py migrate
-Start the development server: python manage.py runserver
+Clone the repository: 
+> git clone git@github.com:heyman242/AI-PLANET-ASSIGNMENT.git
+Navigate to the project directory:
+> cd hackathon_project
+Install the required dependencies:
+> pip install -r requirements.txt
+Set up the database and perform migrations:
+> python manage.py migrate
+Start the development server:
+> python manage.py runserver
 The API will be accessible at http://localhost:8000/
 API Documentation
 For detailed information about the available API endpoints, please refer to the API documentation provided in the API Documentation file.
