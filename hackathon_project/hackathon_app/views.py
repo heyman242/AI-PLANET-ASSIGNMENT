@@ -1,4 +1,5 @@
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
@@ -107,3 +108,35 @@ class SubmitHackathonView(APIView):
             serializer.save(user=user, hackathon=hackathon)
             return Response({'message': 'Submission created successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EnrolledHackathonListView(APIView):
+    def get(self, request, user_id):
+        try:
+            user = RegisteredUser.objects.get(id=user_id)
+        except RegisteredUser.DoesNotExist:
+            return Response({'message': 'Invalid user ID'}, status=status.HTTP_404_NOT_FOUND)
+
+        enrolled_hackathons = EnrolledHackathon.objects.filter(user=user)
+        hackathon_data = []
+
+        for enrolled_hackathon in enrolled_hackathons:
+            hackathon = enrolled_hackathon.hackathon
+            hackathon_data.append({
+                'id': hackathon.id,
+                'title': hackathon.title,
+                'start_datetime': hackathon.start_datetime,
+                'end_datetime': hackathon.end_datetime,
+                'reward_prize': hackathon.reward_prize
+            })
+
+        return Response(hackathon_data, status=status.HTTP_200_OK)
+
+
+class UserSubmissionsView(ListAPIView):
+    serializer_class = SubmissionSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        hackathon_id = self.kwargs['hackathon_id']
+        return Submission.objects.filter(user_id=user_id, hackathon_id=hackathon_id)

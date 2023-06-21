@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import UserRegistrationView, LoginView, UserHackathonCreateView, UserHackathonUpdateView, \
-    UserHackathonDeleteView, HackathonListView, EnrollHackathonView, SubmitHackathonView
+    UserHackathonDeleteView, HackathonListView, EnrollHackathonView, SubmitHackathonView, EnrolledHackathonListView, UserSubmissionsView
 
 
 urlpatterns = [
@@ -14,6 +14,8 @@ urlpatterns = [
     path('list-hackathon/', HackathonListView.as_view(), name='hackathon-list'),
     path('enroll-hackathon/user-id/<int:user_id>/hackathon-id/<int:hackathon_id>/', EnrollHackathonView.as_view(), name='enroll_hackathon'),
     path('submit-hackathon/user_id/<int:user_id>/hackathon_id/<int:hackathon_id>/', SubmitHackathonView.as_view(), name='submit_hackathon'),
+    path('users/<int:user_id>/enrolled-hackathons/', EnrolledHackathonListView.as_view(), name='enrolled-hackathon-list'),
+    path('users/<int:user_id>/hackathons/<int:hackathon_id>/submissions/', UserSubmissionsView.as_view(), name='user-submissions'),
 
 
 ]
