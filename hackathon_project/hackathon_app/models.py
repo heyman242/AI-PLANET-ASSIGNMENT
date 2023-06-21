@@ -15,8 +15,8 @@ class RegisteredUser(models.Model):
 class Hackathon(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    background_image = models.ImageField(upload_to='hackathon/images')
-    hackathon_image = models.ImageField(upload_to='hackathon/images')
+    background_image = models.URLField()
+    hackathon_image = models.URLField()
     SUBMISSION_TYPES = [
         ('image', 'Image'),
         ('file', 'File'),
@@ -26,7 +26,7 @@ class Hackathon(models.Model):
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
     reward_prize = models.DecimalField(max_digits=8, decimal_places=2)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

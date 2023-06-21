@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import RegisteredUser
+from .models import RegisteredUser, Hackathon
 
 
 class RegisteredUserSerializer(serializers.ModelSerializer):
@@ -34,3 +34,16 @@ class LoginSerializer(serializers.Serializer):
         data['user_id'] = user.id
 
         return data
+
+
+class HackathonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hackathon
+        fields = ['title', 'description', 'background_image', 'hackathon_image', 'submission_type',
+                  'start_datetime', 'end_datetime', 'reward_prize']
+        read_only_fields = ['created_by']
+
+    def create(self, validated_data):
+        created_by = validated_data.pop('created_by', None)
+        hackathon = Hackathon.objects.create(created_by=created_by, **validated_data)
+        return hackathon
